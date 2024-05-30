@@ -701,6 +701,8 @@ def create_html_page(params_table, html_path, link_template):
             ra  = row['ra']
             dec = row['dec']
             fov = row['fov']
+            width = row['width']
+            height = row['height']
             thumb_path = row['output']
             label = None
             title = thumb_path
@@ -711,7 +713,7 @@ def create_html_page(params_table, html_path, link_template):
             if link_template:
                 url = link_template.format(ra=row['ra'], dec=row['dec'], fov=row['fov'])
                 h.write(f'    <a href="{url}" target="_blank">')
-            h.write(f'      <img loading="lazy" src="{thumb_path}" title="{title}">\n')
+            h.write(f'      <img loading="lazy" src="{thumb_path}" width="{width}" height="{height}" title="{title}">\n')
             if link_template:
                 h.write('    </a>')
             if label:
