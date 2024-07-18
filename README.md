@@ -2,6 +2,10 @@
 
 HiPS2FITS cutout script - Cutouts generation from local HiPS datasets
 
+## Dependencies
+
+Libraries to be installed are described in [*requirements.txt*](https://github.com/cds-astro/hips2fits-cutout/blob/main/requirements.txt).
+
 ## Usage
 
 ### Generating a single cutout
@@ -21,12 +25,38 @@ Compulsory parameters are:
 
 Two optional parameters are:
 - img_format: *fits*, *jpg* or *png*. Default is *fits*
-- stretch: (applicable for PNG or JPG cutouts). Possible values are *pow2*, *linear*, *sqrt*, *log*, *asinh*. Default is *linear*.
+- stretch: (applicable for PNG or JPG cutouts). Possible values are *pow*, *linear*, *sqrt*, *log*, *asinh*. Default is *linear*.
 
 Example:
 
 `./hips2fits_cutout.py 83.6287 22.0147 0.2 1000 800 /path/to/hips/root my_cutout.fits`
 
+### Generating several cutouts from a list of positions
+
+The script can be used from the command line:
+```bash
+./hips2fits_cutout.py -l <csv-params-table>
+```
+
+You will find an example of such a parameters file in [*SDSS-params.csv*](https://github.com/cds-astro/hips2fits-cutout/blob/main/SDSS-params.csv)
+
+It can also be used directly from your Python script:
+```python
+from astropy.table import Table
+from hips2fits_cutout import generate_for_list
+
+params = Table.read('params-SDSS.csv', format='csv')
+generate_for_list(params)
+```
+
+The parameter file must include at least the following columns:
+
+`ra, dec, fov, width, height, hips, output, format`
+
+You can add optional columns: *min_cut*, *max_cut*, *stretch*
+
+*stretch* can have the following values: 'pow', 'linear', 'sqrt', 'asinh', 'log'
+*min_cut* or *max_cut* can be given as an absolute value in the form of a float, or as a percentile (e.g., '99.97%').
 
 ## License
 
