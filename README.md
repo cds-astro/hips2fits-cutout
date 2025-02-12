@@ -38,7 +38,7 @@ The script can be used from the command line:
 ./hips2fits_cutout.py -l <csv-params-table>
 ```
 
-You will find an example of such a parameters file in [*SDSS-params.csv*](https://github.com/cds-astro/hips2fits-cutout/blob/main/SDSS-params.csv)
+You will find an example of such a parameters file in [*params-SDSS.csv*](https://github.com/cds-astro/hips2fits-cutout/blob/main/params-SDSS.csv)
 
 It can also be used directly from your Python script:
 ```python
