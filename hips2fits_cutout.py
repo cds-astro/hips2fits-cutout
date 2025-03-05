@@ -324,8 +324,8 @@ def make_cutout(width, height, wcs, hips_root, coordsys='icrs', tile_format='fit
 
     coeffs = compute_interpolation_coeff(lon, lat, pixel_order)
 
-    coeffs_0 = coeffs[0].filled(fill_value = -1)
-    coeffs_1 = coeffs[1].filled(fill_value = -1)
+    coeffs_0 = coeffs[0].filled()
+    coeffs_1 = coeffs[1].filled()
 
     t2_end = time.time()
     #print(f'T2: {t2_end-t2_start}')
