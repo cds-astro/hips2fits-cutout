@@ -40,6 +40,8 @@ import math
 
 from functools import lru_cache
 
+import inspect
+
 import numpy as np
 from multiprocessing import Pool
 
@@ -503,7 +505,16 @@ def _apply_stretch(input_image, stretch='linear', min_cut=None, max_cut=None, as
     if not asinh_a:
         asinh_a = 0.1
 
-    image_normalizer = simple_norm(input_image, stretch=stretch, min_cut=min_cut, max_cut=max_cut, asinh_a=asinh_a, clip=True)
+    # we have to inspect simple_norm signature, as this has changed in Astropy>=6.1
+    sig = inspect.signature(simple_norm)
+    if 'vmin' in sig.parameters:
+        params_dict = dict(vmin=min_cut, vmax=max_cut)
+    else:
+        params_dict = dict(min_cut=min_cut, max_cut=max_cut)
+
+    params_dict.update(stretch=stretch, asinh_a=asinh_a, clip=True)
+
+    image_normalizer = simple_norm(input_image, **params_dict)
     image_scaled = image_normalizer(input_image)
     image_scaled = np.flipud(image_scaled)
 
